@@ -12,13 +12,12 @@ process main(void)
     s2 = semcreate(0);
     s3 = semcreate(0);
 
-    
-
-    resume(create(sndA, 1024, 20, "process A", 2, sl, s3));
+    resume(create(sndA, 1024, 20, "process A", 2, s1, s3));
     resume(create(sndB, 1024, 20, "process B", 2, s2, sl));
     resume(create(sndC, 1024, 26, "process C", 2, s3, s2));
 
     return OK;
+}
 
 void sndA (sid32 s1, sid32 s3) 
 {
