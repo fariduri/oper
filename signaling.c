@@ -1,8 +1,8 @@
 #include <xinu.h>
 
-void sndA(sid32 s1, sid32 s3);
-void sndB(sid32 s2, sid32 s1);
-void sndC(sid32 s3, sid32 s2);
+void P1(sid32 s1, sid32 s3);
+void P2(sid32 s2, sid32 s1);
+void P3(sid32 s3, sid32 s2);
 
 process main(void)
 {
@@ -12,42 +12,42 @@ process main(void)
     s2 = semcreate(0);
     s3 = semcreate(0);
 
-    resume(create(sndA, 1024, 20, "process A", 2, s1, s3));
-    resume(create(sndB, 1024, 20, "process B", 2, s2, s1));
-    resume(create(sndC, 1024, 26, "process C", 2, s3, s2));
+    resume(create(P1, 1024, 20, "P1", 2, s1, s3));
+    resume(create(P2, 1024, 20, "P2", 2, s2, s1));
+    resume(create(P3, 1024, 26, "P3", 2, s3, s2));
 
     return OK;
 }
 
-void sndA (sid32 s1, sid32 s3) 
+void P1 (sid32 s1, sid32 s3) 
 {
     while(1) 
     {
         wait(s1);
-        printf("Irashaimase A\n");
-        s1eepms(1000);
-        signal(s3);
+        printf("Kwak\n");
+        sleepms(1000);
+        signal(s2);
     }
 }
 
-void sndB (sid32 s2, sid32 s1) 
+void P2 (sid32 s2, sid32 s1) 
 {
     while(1) 
     {
         wait(s2);
-        printf("Irashaimase B\n");
-        s1eepms(1000);
-        signal(s1);
+        printf("Kwik\n");
+        sleepms(1000);
+        signal(s3);
     }
 }
 
-void sndC (sid32 s3, sid32 s2) 
+void P3 (sid32 s3, sid32 s2) 
 {
     while(1) 
     {
         wait(s3);
-        printf("Irashaimase C\n");
-        s1eepms(1000);
-        signal(s2);
+        printf("Kwek\n");
+        sleepms(1000);
+        signal(s1);
     }
 }
